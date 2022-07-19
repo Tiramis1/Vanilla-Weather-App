@@ -11,7 +11,9 @@
 </head>
 <body>
     <div class="container">
+    <div class="weather-app-wrapper">
     <div class="weather-app">
+    <div class="overview-content">
     <H1>Zurich</H1>
     <ul>
         <li>
@@ -21,10 +23,14 @@
         Clear
         </li>
     </ul>
+</div>
+    
     <div class="row">
         <div class="col-6">
-            <img src="https://ssl.gstatic.com/onebox/weather/64/sunny.png" alt="weather symbol"/>
-        12° | F
+            <div class="clearfix weather-temperature">
+            <img src="https://ssl.gstatic.com/onebox/weather/64/sunny.png" alt="weather-symbol" class="float-left"/>
+             <strong>12</strong><span class="units"> °C |<a href="#">°F</a></span>
+            </div>
         </div>
         <div class="col-6">
         <ul>
@@ -34,11 +40,13 @@
         </ul>
         </div>
     </div>
+</div>
     <script src="src/app.js"></script>
-    
+
     <small>
     <a href="https://github.com/Tiramis1/Vanilla-Weather-App" target="_blank">Open-source code,</a> by Isik Tiramis 👩🏻‍💻
     </small>
+</div>
 </div>
 </div>
 </body>
