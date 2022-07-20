@@ -1,5 +1,6 @@
 function displayTemperature(response){
     console.log(response.data);
+}
 
 function dateFormat(timestamp){
     let date= new Date(timestamp);
@@ -14,7 +15,6 @@ function dateFormat(timestamp){
     let days=["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
     let day=days[date.getDay()];
     return `${day} ${hours}:${minutes};
-}
 
     let cityElement= document.querySelector("#city");
     cityElement.innerHTML=response.data.name;
@@ -35,6 +35,10 @@ function dateFormat(timestamp){
 
     let dateElement=document.querySelector("#date");
     dateElement.innerHTML= dateFormat(response.data.dt*1000);
+
+    let iconElement=document.querySelector("#weather-icon");
+    iconElement.setAttribute("src",`http://openweathermap.org/img/wn/${repsonse.data.weather[0].icon}@2x.png`);
+    iconElement.setAttribute("alt", response.data.weather[0].description);
 }
 
 let apiKey= "0951c90b2bac386d03348c6017a913c9";
