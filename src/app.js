@@ -35,15 +35,20 @@ function dateFormat(timestamp){
     dateElement.innerHTML= dateFormat(response.data.dt*1000);
 
     let iconElement=document.querySelector("#weather-icon");
-    iconElement.setAttribute("src", http://openweathermap.org/img/wn/${repsonse.data.weather[0].icon}@2x.png);
+
+    let celsiusTemperature=response.data.main.temp;
+    
+    iconElement.setAttribute(
+        "src", 
+        `http://openweathermap.org/img/wn/${repsonse.data.weather[0].icon}@2x.png`);
     iconElement.setAttribute("alt", response.data.weather[0].description);
 }
 
 function search(city){
     let apiKey= "0951c90b2bac386d03348c6017a913c9";
-    let apiUrl= `https://api.openweathermap.org/data/2.5/weather?q=Zurich&appid=${apiKey}&units=metric`;
+    let apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric`;
 
-    axios.get(apiUrl).then(displayTemperature);
+  axios.get(apiUrl).then(displayTemperature);
 }
 
 function handleSubmit(event){
@@ -52,7 +57,34 @@ function handleSubmit(event){
     search(cityName.value);
     console.log(cityName.value);
 
-search("Paris");
+
+
+function displayFahrenheitTemperature(event){
+    event.preventDefault();
+    let temperatureElement=document.querySelector("#temperature");
+    celsiusLink.classList.remove("active");
+    fahrenheitLink.classList.add("active");
+    let fahrenheitTemperature = (celsiusTemperature * 9) / 5 + 32;);
+    temperatureElement.innerHTML=Math.round(fahrenheitTemperature
+}
+
+function displayCelsiusTemperature(event){
+    event.preventDefault();
+    celsiusLink.classList.add("active");
+    fahrenheitLink.classList.remove("active");
+    let temperatureElement=document.querySelector("#temperature");
+    temperatureElement.innerHTML=Math.round(celsiusTemperature);
+}
+
+let celsiusTemperature=null;
 
 let form=document.querySelector("#search-form");
 form.addEventListener("submit", handleSubmit);
+
+let fahrenheitLink= document.querySelector("#fahrenheit-link");
+fahrenheitLink.addEventListener("click", displayFahrenheitTemperature);
+
+let celsiusLink= document.querySelector("#celsius-link");
+celsiusLink.addEventListener("click", displayCelsiusTemperature);
+
+search("Zurich");
