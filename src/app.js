@@ -19,8 +19,6 @@ function dateFormat(timestamp){
     let cityElement= document.querySelector("#city");
     cityElement.innerHTML=response.data.name;
 
-
-    console.log(response.data.main.temp);
     let temperatureElement= document.querySelector("#temperature");
     temperatureElement.innerHTML=Math.round(response.data.main.temp);
 
@@ -37,11 +35,24 @@ function dateFormat(timestamp){
     dateElement.innerHTML= dateFormat(response.data.dt*1000);
 
     let iconElement=document.querySelector("#weather-icon");
-    iconElement.setAttribute("src",`http://openweathermap.org/img/wn/${repsonse.data.weather[0].icon}@2x.png`);
+    iconElement.setAttribute("src", http://openweathermap.org/img/wn/${repsonse.data.weather[0].icon}@2x.png);
     iconElement.setAttribute("alt", response.data.weather[0].description);
 }
 
-let apiKey= "0951c90b2bac386d03348c6017a913c9";
-let apiUrl=`https://api.openweathermap.org/data/2.5/weather?q=Zurich&appid=${apiKey}&units=metric`;
+function search(city){
+    let apiKey= "0951c90b2bac386d03348c6017a913c9";
+    let apiUrl= `https://api.openweathermap.org/data/2.5/weather?q=Zurich&appid=${apiKey}&units=metric`;
 
-axios.get(apiUrl).then(displayTemperature);
+    axios.get(apiUrl).then(displayTemperature);
+}
+
+function handleSubmit(event){
+    event.preventDefault();
+    let cityName=document.querySelector("#search-input");
+    search(cityName.value);
+    console.log(cityName.value);
+
+search("Paris");
+
+let form=document.querySelector("#search-form");
+form.addEventListener("submit", handleSubmit);
