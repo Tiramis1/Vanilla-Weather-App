@@ -1,7 +1,3 @@
-function displayTemperature(response){
-    console.log(response.data);
-}
-
 function dateFormat(timestamp){
     let date= new Date(timestamp);
     let hours=date.getHours();
@@ -14,7 +10,11 @@ function dateFormat(timestamp){
     }
     let days=["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
     let day=days[date.getDay()];
-    return `${day} ${hours}:${minutes};
+    return `${day} ${hours}:${minutes}`
+}
+
+function displayTemperature(response){
+    console.log(response.data);
 
     let cityElement= document.querySelector("#city");
     cityElement.innerHTML=response.data.name;
@@ -43,7 +43,6 @@ function dateFormat(timestamp){
         `http://openweathermap.org/img/wn/${repsonse.data.weather[0].icon}@2x.png`);
     iconElement.setAttribute("alt", response.data.weather[0].description);
 }
-
 function search(city){
     let apiKey= "0951c90b2bac386d03348c6017a913c9";
     let apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric`;
@@ -56,7 +55,7 @@ function handleSubmit(event){
     let cityName=document.querySelector("#search-input");
     search(cityName.value);
     console.log(cityName.value);
-
+}
 
 
 function displayFahrenheitTemperature(event){
@@ -64,8 +63,8 @@ function displayFahrenheitTemperature(event){
     let temperatureElement=document.querySelector("#temperature");
     celsiusLink.classList.remove("active");
     fahrenheitLink.classList.add("active");
-    let fahrenheitTemperature = (celsiusTemperature * 9) / 5 + 32;);
-    temperatureElement.innerHTML=Math.round(fahrenheitTemperature
+    let fahrenheitTemperature = (celsiusTemperature * 9) / 5 + 32;
+    temperatureElement.innerHTML=Math.round(fahrenheitTemperature);
 }
 
 function displayCelsiusTemperature(event){
@@ -75,6 +74,7 @@ function displayCelsiusTemperature(event){
     let temperatureElement=document.querySelector("#temperature");
     temperatureElement.innerHTML=Math.round(celsiusTemperature);
 }
+
 
 let celsiusTemperature=null;
 
