@@ -13,8 +13,16 @@ function dateFormat(timestamp){
     return `${day} ${hours}:${minutes}`
 }
 
+function getForecast(coordinates){
+    console.log(coordinates);
+    let apiKey= "0951c90b2bac386d03348c6017a913c9";
+    let apiUrl= `https://api.openweathermap.org/data/2.5/onecall?lat=${coordinates.lat}&lon=${coordinates.lon}&appid=${apiKey}&units=metric`;
+    console.log(apiUrl);
+    axios.get(apiUrl).then(displayForecast);
+}
+
 function displayTemperature(response){
-    console.log(response.data);
+    console.log(response.data.daily);
 
     let cityElement= document.querySelector("#city");
     cityElement.innerHTML=response.data.name;
@@ -40,9 +48,31 @@ function displayTemperature(response){
     
     iconElement.setAttribute(
         "src", 
-        `http://openweathermap.org/img/wn/${repsonse.data.weather[0].icon}@2x.png`);
+        `http://openweathermap.org/img/wn/${response.data.weather[0].icon}@2x.png`);
     iconElement.setAttribute("alt", response.data.weather[0].description);
+
+    getForecast(response.data.coord);
 }
+
+function displayForecast(response){
+    console.log(response.data);
+    let forecastElement=document.querySelector("#forecast");
+    let forecastHTML= `<div class="row">`;
+    let days=["Sun","Mon","Tue","Wed"];
+    days.forEach(function (day) {
+       forecastHTML= 
+            forecastHTML +          
+                `<div class="col-2">
+                    <div class="forecast-weekday">${day}</div>
+                    <span class="forecast-temperature-max">34</span>
+                    <span class="forecast-temperature-min">28</span>
+                </div>`;
+    });
+
+    forecastHTML= forecastHTML + `</div>`;
+    forecastElement.innerHTML = forecastHTML;
+}
+
 function search(city){
     let apiKey= "0951c90b2bac386d03348c6017a913c9";
     let apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric`;
@@ -57,14 +87,13 @@ function handleSubmit(event){
     console.log(cityName.value);
 }
 
-
 function displayFahrenheitTemperature(event){
     event.preventDefault();
     let temperatureElement=document.querySelector("#temperature");
     celsiusLink.classList.remove("active");
     fahrenheitLink.classList.add("active");
     let fahrenheitTemperature = (celsiusTemperature * 9) / 5 + 32;
-    temperatureElement.innerHTML=Math.round(fahrenheitTemperature);
+    temperatureElement.innerHTML= Math.round(fahrenheitTemperature);
 }
 
 function displayCelsiusTemperature(event){
